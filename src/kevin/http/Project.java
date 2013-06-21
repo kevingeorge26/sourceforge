@@ -29,7 +29,7 @@ public class Project
 	Set<String> rfcList = new HashSet<String>(); // to keep track which RFC were mentioned
 	String projectName;
 
-	int rfcFoundCounter = 0,rfcNotFoundCounter = 0;
+	public static int rfcFoundCounter = 0,rfcNotFoundCounter = 0;
 	BufferedWriter bw;
 	
 	public Project(String link,String projectName) {
@@ -46,12 +46,15 @@ public class Project
 				File folder = new File(withoutRFC + File.separator + projectName);
 				folder.mkdir();
 				bw = new BufferedWriter(new FileWriter(new File(withoutRFC + File.separator + projectName + File.separator + "ReadMe.txt")));
+				writeDetails("Project Name : " + projectName);
+				writeDetails("Project link : " + link);		
 			}
-
+			else{
 			writeDetails("Project Name : " + projectName);
-			writeDetails("Project link : " + link);
-			
+			writeDetails("Project link : " + link);			
 			getDownloadProject(doc,foundRFC);
+			}
+			
 			bw.close();
 
 		} catch (IOException e) {
@@ -73,6 +76,7 @@ public class Project
 	private boolean getDownloadProject(Document doc,boolean foundRFC){
 		boolean downloadPageFound = false;
 		Elements elements = doc.select("section#download_button a.sfdl");
+		
 		for(Element element : elements){
 			downloadPageFound = true;
 
